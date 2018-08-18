@@ -12,7 +12,7 @@ The player consists of two elements:
 * slots
 
 For more information about the internal workings of these components, 
-read the [Internal](github.com/Hundemeier/simple-audio#Internal) section.
+read the [Internal](https://github.com/Hundemeier/simple-audio#Internal) section.
 
 You can upload audio files (*.mp3 and *.wav) to the pool for future use.
 You can then assign a file from the pool to one slot. Currently there are the slots from 1-512 available.

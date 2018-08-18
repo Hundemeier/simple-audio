@@ -1,0 +1,14 @@
+.form-control{
+  color: #fff;
+  background-color: var(--dark);
+  border: 1px solid var(--secondary);
+}
+.form-control:focus{
+  color: #fff;
+  background-color: var(--dark);
+}
+
+.custom-file-label {
+  color: darkgray;
+  background-color: var(--dark);
+}

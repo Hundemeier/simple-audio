@@ -1,0 +1,24 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+out/*
+pool/*
+
+# execlude specific config
+config.json
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# execlude the minified webgui that is included in the executable:
+bindata.go
+
+#execlude all test audio-files
+*.mp3
+*.wav

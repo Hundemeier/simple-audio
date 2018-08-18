@@ -5,6 +5,8 @@ This software is currently under development, but the webinterface already works
 
 In the future this player should be remotely controlled via sACN (DMX).
 
+You can find downloads on the [releases](https://github.com/Hundemeier/simple-audio/releases) page.
+
 ## Philosophy
 
 The player consists of two elements:

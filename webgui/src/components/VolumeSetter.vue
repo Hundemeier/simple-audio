@@ -39,9 +39,9 @@ export default {
             'volume': this.volumeData
           }
         }
-      }).then(() => {
+      })/* .then(() => { // currently unecessary, becuase this is handled via the websocket
         this.$apollo.queries.slots.refetch()
-      })
+      }) */
     }
   }
 }

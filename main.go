@@ -9,6 +9,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/Hundemeier/go-sacn/sacn"
+
 	assetfs "github.com/elazarl/go-bindata-assetfs"
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/speaker"
@@ -21,7 +23,8 @@ const sampleRate = beep.SampleRate(44100)
 //slotMap contains the mapping of a slot to a filename in the poolDir
 var slotMap = newSyncSlotMap()
 
-var port = flag.Uint("port", 8080, "the port on which the webinterface is listening. Only use port 80, when no other application is using this port!")
+var port = flag.Uint("port", 8000, "the port on which the webinterface is listening. Only use port 80, when no other application is using this port!")
+var universe = flag.Uint("universe", 1, "the sACN universe on which the player should listen on incoming DMX data. Currently only via Unicast.")
 
 func main() {
 	slotMap.onPlayerChange = func(slot uint, play *player) {
@@ -36,6 +39,8 @@ func main() {
 	initSpeaker()
 
 	makeSlotMapFromConfig()
+
+	initSacn()
 
 	initGraphql()
 	initWebService()
@@ -72,6 +77,15 @@ func initWebService() {
 	http.HandleFunc("/pool/upload", uploadHandler)
 	http.HandleFunc("/websocket", handleWebsocket)
 	log.Fatal(server.ListenAndServe())
+}
+
+func initSacn() {
+	recv, err := sacn.NewReceiverSocket("", nil)
+	if err != nil {
+		fmt.Println("Error! sACN could not be initalized! sACN is not available!")
+	}
+	recv.SetOnChangeCallback(sACNhandler)
+	recv.Start()
 }
 
 func makeSlotMapFromConfig() {

@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="slot in slots" :key="slot.slot" :class="{'table-success': slot.player.playing}">
+        <tr v-for="slot in slots" :key="slot.slot" :class="{'table-success': slot.player.playing, 'table-info': slot.player.current > 10 && !slot.player.playing}">
           <td>{{slot.slot}}</td>
           <td>{{slot.item.name + '.' + slot.item.extension}}</td>
           <td>
@@ -65,6 +65,7 @@ export default {
             location.reload()
           }
           this.error = false
+          console.log(data)
           // manually sort the array
           var arr = data.slots.slice()
           this.slots = arr.sort((a, b) => (a.slot - b.slot))

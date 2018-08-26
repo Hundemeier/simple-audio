@@ -11,6 +11,9 @@ export const GET_SLOTS = gql`{
       playing
       loop
       volume
+      rate
+      current
+      length
     }
   }
 }`

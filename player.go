@@ -15,17 +15,19 @@ type player struct {
 	vol      *effects.Volume
 	mtx      sync.Mutex
 	//stopCallback func(*player) //this callback gets invoked, if the file is at the end, or stop() was used
-	loop     bool
-	seaker   beep.StreamSeekCloser
-	onChange func(*player) //change callback with the new values as parameter. WITHOUT loop currently
+	loop       bool
+	sampleRate uint //sampleRate in Hz
+	seaker     beep.StreamSeekCloser
+	onChange   func(*player) //change callback with the new values as parameter. WITHOUT loop currently
 }
 
 func newPlayer(filename string) (play *player, err error) {
 	play = &player{filename: filename}
-	sampled, s, err := newPlayerInternal(filename)
+	sampled, s, rate, err := newPlayerInternal(filename)
 	if err != nil {
 		return
 	}
+	play.sampleRate = rate
 	play.seaker = s
 	//create a ctrl so the player can pause and resume the playback. Start in paused mode
 	play.ctrl = &beep.Ctrl{Streamer: sampled, Paused: true}
@@ -41,12 +43,12 @@ func newPlayer(filename string) (play *player, err error) {
 
 //newPlayerInternal does cresate a stremaer with resampler from the filename.
 //Does not add this to speaker.Play!
-func newPlayerInternal(filename string) (stream beep.Streamer, s beep.StreamSeekCloser, err error) {
+func newPlayerInternal(filename string) (stream beep.Streamer, s beep.StreamSeekCloser, rate uint, err error) {
 	s, format, err := decode(filename)
 	if err != nil {
 		return
 	}
-
+	rate = uint(int(format.SampleRate))
 	//use Resampler for the speaker and the given file, so we always use the correct sampleRate
 	stream = beep.Resample(3, format.SampleRate, sampleRate, s)
 	return
@@ -98,7 +100,6 @@ func (p *player) stop() {
 	//because we are calling internal functions we need no mutex lock
 	p.pause()
 	p.rewindInternal()
-	go p.callOnChange()
 }
 
 //rewindInternal is an internal function.
@@ -136,4 +137,12 @@ func (p *player) volume() float64 {
 	p.mtx.Lock()
 	defer p.mtx.Unlock()
 	return p.vol.Volume
+}
+
+func (p *player) currentSample() int {
+	return p.seaker.Position()
+}
+
+func (p *player) maxSample() int {
+	return p.seaker.Len()
 }

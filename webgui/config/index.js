@@ -12,20 +12,20 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/graphql': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8000',
       },
       '/websocket/*': {
-        target: 'ws://localhost:8080',
+        target: 'ws://localhost:8000',
         ws: true,
       },
       '/pool/upload': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:8000',
       }
     },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

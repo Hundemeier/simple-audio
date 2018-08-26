@@ -109,6 +109,9 @@ func (s *syncSlotMap) getSlotItem(slot uint) (item slotItem, err error) {
 			Playing: !player.isPaused(),
 			Volume:  player.volume(),
 			Loop:    player.loop,
+			Current: player.currentSample(),
+			Length:  player.maxSample(),
+			Rate:    player.sampleRate,
 		},
 	}
 	return

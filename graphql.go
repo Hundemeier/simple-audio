@@ -25,6 +25,9 @@ type playerItem struct {
 	Volume  float64 `json:"volume"`
 	Loop    bool    `json:"loop"`
 	Stop    bool    `json:"stop"` //only used in PlayerInput type
+	Current int     `json:"current"`
+	Length  int     `json:"length"`
+	Rate    uint    `json:"rate"`
 }
 
 func initGraphql() {
@@ -68,6 +71,19 @@ func initGraphql() {
 				"loop": &graphql.Field{
 					Type:        graphql.Boolean,
 					Description: `If this is true, the playback will be looped forever.`,
+				},
+				"current": &graphql.Field{
+					Type:        graphql.Int,
+					Description: `The current sample where the player is.`,
+				},
+				"length": &graphql.Field{
+					Type:        graphql.Int,
+					Description: `The maximum sample. It is the last sample of the player.`,
+				},
+				"rate": &graphql.Field{
+					Type: graphql.Int,
+					Description: `The sample rate of the player. This can be different from the 44,1 kHz 
+					that are used internally. All players get resampled before they are played.`,
 				},
 			},
 		},

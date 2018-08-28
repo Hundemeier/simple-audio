@@ -6,6 +6,7 @@
 *.dylib
 out/*
 pool/*
+simple-audio
 
 # execlude specific config
 config.json

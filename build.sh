@@ -1,4 +1,12 @@
 #!/bin/bash
+
+#make the wegui
+cd webgui/
+if !(npm run build); then
+  printf 'Could not build webgui!'
+  exit 1
+fi
+cd ..
 #make the assetFS filesystem that includes everything in the webgui/build folder into the executable
 go-bindata-assetfs webgui/dist/...
 

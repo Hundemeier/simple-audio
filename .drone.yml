@@ -9,10 +9,11 @@ clone:
     tags: true
 
 pipeline:
-  pre-build-go:
+  backend:
     image: golang
     group: pre-build
     commands:
+      - apt install libasound2-dev
       - go get
 
   frontend:

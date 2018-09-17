@@ -1,6 +1,5 @@
 workspace:
   base: /go
-  base: /alsa
   path: src/github.com/Hundemeier/simple-audio
 
 clone:
@@ -14,7 +13,7 @@ pipeline:
     image: golang
     group: dep
     commands:
-      - apt update && apt install -y libasound2-dev
+      #- apt update && apt install -y libasound2-dev
       - go get -v -d #only download and not build
 
   frontend:
@@ -28,5 +27,7 @@ pipeline:
   build:
     image: golang
     commands:
+      - go get github.com/jteeuwen/go-bindata/...
+      - go get github.com/elazarl/go-bindata-assetfs/...
       - go-bindata-assetfs webgui/dist/...
       - GOOS=windows GOARCH=amd64 go build -o out/simpleAudio_win_amd64.exe

@@ -14,7 +14,7 @@ pipeline:
     group: pre-build
     commands:
       - apt update && apt install -y libasound2-dev
-      - go get
+      - go get -v -d #only download and not build
 
   frontend:
     image: node
@@ -31,4 +31,4 @@ pipeline:
   build:
     image: golang
     commands:
-      - go build
+      - ./build.sh

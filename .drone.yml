@@ -48,3 +48,8 @@ pipeline:
     commands:
       - apt update && apt install -y libasound2-dev
       - GOOS=linux GOARCH=amd64 go build -o out/simpleAudio_linux_amd64
+
+  discord:
+    image: appleboy/drone-discord
+    secrets: [ discord_webhook_id ]
+    message: "Testing from drone image"

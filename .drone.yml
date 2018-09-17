@@ -57,3 +57,11 @@ pipeline:
       author: {{build.author}} on branch {{build.branch}} with {{build.commit}}
       build: {{build.number}} after {{build.event}}
       {{build.link}}
+
+  github_release:
+    image: plugins/github-release
+    files: out/*
+    secrets: [ github_token ]
+    draft: true
+    when:
+      event: tag

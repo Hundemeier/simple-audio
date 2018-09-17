@@ -51,5 +51,5 @@ pipeline:
 
   discord:
     image: appleboy/drone-discord
-    secrets: [ discord_webhook_id ]
+    secrets: [ discord_webhook_id, discord_webhook_token ]
     message: "Testing from drone image"

@@ -13,7 +13,6 @@ pipeline:
     image: golang
     group: dep
     commands:
-      #- apt update && apt install -y libasound2-dev
       - go get -v -d #only download and not build
 
   frontend:
@@ -24,10 +23,28 @@ pipeline:
       - npm install
       - npm run build
   
-  build:
+  pre-build:
     image: golang
     commands:
       - go get github.com/jteeuwen/go-bindata/...
       - go get github.com/elazarl/go-bindata-assetfs/...
       - go-bindata-assetfs webgui/dist/...
+  
+  build-win-64:
+    image: golang
+    group: build
+    commands:
       - GOOS=windows GOARCH=amd64 go build -o out/simpleAudio_win_amd64.exe
+
+  build-win-32:
+    image: golang
+    group: build
+    commands:
+      - GOOS=windows GOARCH=386 go build -o out/simpleAudio_win_386.exe
+
+  build-linux-64:
+    image: golang
+    group: build
+    commands:
+      - apt update && apt install -y libasound2-dev
+      - GOOS=linux GOARCH=amd64 go build -o out/simpleAudio_linux_amd64

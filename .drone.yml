@@ -1,5 +1,6 @@
 workspace:
   base: /go
+  base: /alsa
   path: src/github.com/Hundemeier/simple-audio
 
 clone:
@@ -11,11 +12,20 @@ clone:
 pipeline:
   backend:
     image: golang
+    group: dep
     commands:
-      - apt update && apt install -y libasound2-dev node
+      - apt update && apt install -y libasound2-dev
       - go get -v -d #only download and not build
+
+  frontend:
+    image: node
+    group: dep
+    commands:
       - cd webgui/
       - npm install
-      - cd ..
-      - go test -v .
+      - npm run build
+  
+  build:
+    image: golang
+    commands:
       - ./build.sh

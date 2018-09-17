@@ -55,5 +55,5 @@ pipeline:
     message: |
       {{ repo.name }}: {{ build.status }}
       author: {{build.author}} on branch {{build.branch}} with {{build.commit}}
-      build: {{build.number}} started {{datetime build.started}} after {{build.event}}
+      build: {{build.number}} after {{build.event}}
       {{build.link}}

@@ -28,4 +28,5 @@ pipeline:
   build:
     image: golang
     commands:
-      - ./build.sh
+      - go-bindata-assetfs webgui/dist/...
+      - GOOS=windows GOARCH=amd64 go build -o out/simpleAudio_win_amd64.exe

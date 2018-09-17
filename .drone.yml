@@ -1,0 +1,23 @@
+pipeline:
+  pre-build-go:
+    image: golang
+    group: pre-build
+    commands:
+      - go get
+
+  frontend:
+    image: node
+    group: pre-build
+    commands:
+      - npm install
+#      - npm run build
+
+  testing:
+    image: golang
+    commands:
+      - go test -v .
+
+  build:
+    image: golang
+    commands:
+      - go build

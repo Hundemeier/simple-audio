@@ -13,7 +13,7 @@ pipeline:
     image: golang
     group: pre-build
     commands:
-      - apt install libasound2-dev
+      - apt update && apt install -y libasound2-dev
       - go get
 
   frontend:

@@ -68,9 +68,23 @@ pipeline:
     when:
       event: tag
 
-  upload_debug:
+  upload_webdav_win64:
     image: vividboarder/drone-webdav
     group: upload
-    file: out/*
+    file: out/simpleAudio_win_amd64.exe
+    destination: https://nextcloud.helmutzett.p7.de:10000/remote.php/dav/files/drone/uploads/
+    secrets: [webdav_username, webdav_password]
+
+  upload_webdav_win32:
+    image: vividboarder/drone-webdav
+    group: upload
+    file: out/simpleAudio_win_386.exe
+    destination: https://nextcloud.helmutzett.p7.de:10000/remote.php/dav/files/drone/uploads/
+    secrets: [webdav_username, webdav_password]
+
+  upload_webdav_linux64:
+    image: vividboarder/drone-webdav
+    group: upload
+    file: out/simpleAudio_linux_amd64
     destination: https://nextcloud.helmutzett.p7.de:10000/remote.php/dav/files/drone/uploads/
     secrets: [webdav_username, webdav_password]

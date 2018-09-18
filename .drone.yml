@@ -51,6 +51,7 @@ pipeline:
 
   discord:
     image: appleboy/drone-discord
+    group: upload
     secrets: [ discord_webhook_id, discord_webhook_token ]
     message: |
       {{ repo.name }}: {{ build.status }}
@@ -60,8 +61,16 @@ pipeline:
 
   github_release:
     image: plugins/github-release
+    group: upload
     files: out/*
     secrets: [ github_token ]
     draft: true
     when:
       event: tag
+
+  upload_debug:
+    image: vividboarder/drone-webdav
+    group: upload
+    file: out/*
+    destination: https://nextcloud.helmutzett.p7.de:10000/remote.php/dav/files/drone/uploads/
+    secrets: [webdav_username, webdav_password]

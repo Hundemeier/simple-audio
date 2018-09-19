@@ -59,15 +59,6 @@ pipeline:
       build: {{build.number}} after {{build.event}}
       {{build.link}}
 
-  code-analysis:
-    image: aosapps/drone-sonar-plugin
-    group: upload
-    secrets: [sonar_host, sonar_token]
-    commands:
-      - apk update && apk add git
-      - git --version
-      - /bin/drone-sonar
-
   github_release:
     image: plugins/github-release
     group: upload

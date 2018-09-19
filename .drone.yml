@@ -63,6 +63,8 @@ pipeline:
     image: aosapps/drone-sonar-plugin
     group: upload
     secrets: [sonar_host, sonar_token]
+    commands:
+      - apk update && apk add --no-cache git
 
   github_release:
     image: plugins/github-release

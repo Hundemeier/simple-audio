@@ -3,9 +3,22 @@ This is a simple audio player that can be remotely controlled via a webinterface
 
 This software is currently under development, but the webinterface already works mostly.
 
-In the future this player should be remotely controlled via sACN (DMX).
-
 You can find downloads on the [releases](https://github.com/Hundemeier/simple-audio/releases) page.
+
+## sACN
+
+Currently the sACN implementation is very simple:
+
+Via the `-port` flag, you can provide the universe on which the player listens on. Then the slots and
+DMX channels are mapped 1:1. This means that channel 1 controls slot 1.
+
+The DMX values are as following:
+
+```
+0-85: stop
+86-171: pause
+172-255: play
+```
 
 ## Philosophy
 
